@@ -1,14 +1,13 @@
-import { Stack } from 'expo-router'
+import { Slot } from 'expo-router'
 import React from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import "./global.css"
 
 const _layout = () => {
   return (
-    <Stack
-      screenOptions={{
-            headerShown: true,
-          }}
-    />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Slot />
+    </GestureHandlerRootView>
   )
 }
 
