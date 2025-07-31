@@ -1,38 +1,23 @@
 import CustomDrawerContent from '@/presentation/components/CustomDrawer'
-import { Ionicons } from '@expo/vector-icons'
 import { Drawer } from 'expo-router/drawer'
-import colors from '../theme/colors'
 
-const DrawerLayout = () => {
+export default function DrawerLayout() {
   return (
     <Drawer
         drawerContent={CustomDrawerContent}
         screenOptions={{
-            headerShadowVisible: false
+            overlayColor: 'rgba(0, 0, 0, 0.4)',
+            drawerActiveTintColor: 'indigo',
+            headerShadowVisible: false,
+            sceneStyle: {
+                backgroundColor: 'white',
+            },
+            drawerItemStyle: {
+                borderRadius: 10
+            },
+            headerShown: false,
         }}
     >
-        <Drawer.Screen 
-            name="home/index"
-            options={{
-                title: 'Bienvenido',
-                drawerLabel: 'Inicio',
-                drawerIcon: ({ size }) => (
-                    <Ionicons name='home-outline' size={size} color={colors.primary} />
-                )
-            }}
-        />
-        <Drawer.Screen 
-            name="liderazgo/index"
-            options={{
-                title: 'Liderazgo Visible en Campo',
-                drawerLabel: 'Liderazgo Visible en Campo',
-                drawerIcon: ({ size }) => (
-                    <Ionicons name='person-outline' size={size} color={colors.primary} />
-                )
-            }}
-        />
     </Drawer>
   )
 }
-
-export default DrawerLayout
