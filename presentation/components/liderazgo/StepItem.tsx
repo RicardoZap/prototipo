@@ -12,7 +12,11 @@ const StepItem: React.FC<StepItemProps> = ({ step, isActive, onPress }) => {
   const scale = useSharedValue(1)
 
   useEffect(() => {
-    scale.value = withSpring(isActive ? 1.2 : 1)
+  // Usa cancelAnimation + runOnJS para mayor control (opcionalmente)
+    scale.value = withSpring(isActive ? 1.2 : 1, {
+      damping: 10,
+      stiffness: 100,
+    })
   }, [isActive])
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -21,7 +25,7 @@ const StepItem: React.FC<StepItemProps> = ({ step, isActive, onPress }) => {
 
   return (
     <TouchableOpacity className="items-center flex-1" onPress={onPress}>
-      <Animated.View style={animatedStyle}>
+      <Animated.View style={[animatedStyle]} className="items-center justify-center w-full">
         <Image source={step.icon} className="w-10 h-10" />
       </Animated.View>
       <Text className={isActive ? 'text-black font-bold mt-1' : 'text-gray-500 mt-1'}>

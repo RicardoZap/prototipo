@@ -256,7 +256,7 @@ export const controlesCriticosOpt = [
     }
 ]
 
-export const riesgoCriticoAsocieado = [
+export const riesgoCriticoAsociado = [
     {
         "value": "1",
         "label": "Riesgo crítico 1"

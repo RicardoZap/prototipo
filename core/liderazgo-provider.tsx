@@ -24,6 +24,8 @@ type LiderazgoFormContextType = {
   setUnidadTrabajo: (value: string) => void
   riesgosCriticos: RiesgoCriticoSimple[]
   setRiesgosCriticos: (value: RiesgoCriticoSimple[]) => void
+  requiereCuasiaccidente: boolean
+  setRequiereCuasiaccidente: (value: boolean) => void
 }
 
 const LiderazgoFormContext = createContext<LiderazgoFormContextType | undefined>(undefined)
@@ -42,6 +44,7 @@ export const LiderazgoFormProvider = ({ children, defaultValues }: { children: R
   const [contratistasProvider, setContratistasProvider] = useState<ContratistaSimple[]>([])
   const [unidadTrabajo, setUnidadTrabajo] = useState('')
   const [riesgosCriticos, setRiesgosCriticos] = useState<RiesgoCriticoSimple[]>([])
+  const [requiereCuasiaccidente, setRequiereCuasiaccidente] = useState<boolean>(false)
 
   /*const API = axios.create({
     baseURL: 'https://tu-api.com/', // 
@@ -185,6 +188,8 @@ export const LiderazgoFormProvider = ({ children, defaultValues }: { children: R
         setUnidadTrabajo,
         riesgosCriticos,
         setRiesgosCriticos,
+        requiereCuasiaccidente,
+        setRequiereCuasiaccidente
       }}
     >
       {children}

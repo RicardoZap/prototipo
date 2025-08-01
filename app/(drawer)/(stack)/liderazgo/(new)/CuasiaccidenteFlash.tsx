@@ -1,4 +1,5 @@
 import CustomInput from '@/presentation/components/form/CustomInput'
+import CustomMultiSelect from '@/presentation/components/form/CustomMultiSelect'
 import CustomSelect from '@/presentation/components/form/CustomSelect'
 import CustomModal from '@/presentation/components/liderazgo/CustomRiesgosControlesModal'
 import { danio, dimension, nivelImpactoPotencial, nivelImpactoReal } from '@/presentation/helpers/data'
@@ -26,7 +27,7 @@ const CuasiaccidenteFlash = () => {
   return (
     <ScrollView className="flex-1 p-4">
       <Text className='font-bold text-xl'>Información General</Text>
-      <CustomSelect control={control} name='dimension_id' label='Dimensión' options={dimension}/>
+      <CustomMultiSelect control={control} name='dimension_id' onChangeExternal={(vals) => console.log(vals)} label='Dimensión' data={dimension} labelField='label' valueField='value'/>
 
       <Text className='font-bold text-xl'>Incidente</Text>
       <CustomInput 

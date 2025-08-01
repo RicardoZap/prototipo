@@ -1,12 +1,14 @@
+import { LiderazgoFormProvider } from '@/core/liderazgo-provider'
 import LiderazgoStepper from '@/presentation/components/liderazgo/LiderazgoStepper'
 import { useLiderazgoStepper } from '@/presentation/hooks/useLiderazgoStepper'
 import { StepperProvider, useStepperContext } from '@/presentation/hooks/useStepperContext'
 import { Slot } from 'expo-router'
-import { KeyboardAvoidingView, Platform, Pressable, Text, View } from 'react-native'
+import { useEffect } from 'react'
+import { BackHandler, KeyboardAvoidingView, Platform, Pressable, Text, View } from 'react-native'
 
 const LayoutContent = () => {
   const { goNext, goBack } = useLiderazgoStepper()
-  const { onNext, onBack } = useStepperContext()
+  const { onNext, onBack, nextLabel, backLabel } = useStepperContext()
 
   const handleNext = () => {
     if (onNext) onNext()
@@ -17,6 +19,15 @@ const LayoutContent = () => {
     if (onBack) onBack()
     else goBack()
   }
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Previene la acción por defecto
+      return true
+    })
+
+    return () => backHandler.remove()
+  }, [])
 
   return (
     <KeyboardAvoidingView
@@ -38,13 +49,15 @@ const LayoutContent = () => {
             className="flex-1 bg-secondary px-4 py-3 rounded-lg active:opacity-80"
             onPress={handleBack}
           >
-            <Text className="text-white text-center font-bold">Atrás</Text>
+            <Text className="text-white text-center font-bold">{backLabel ?? 'Atrás'}</Text>
           </Pressable>
           <Pressable
             className="flex-1 bg-secondary px-4 py-3 rounded-lg active:opacity-80"
             onPress={handleNext}
           >
-            <Text className="text-white text-center font-bold">Siguiente</Text>
+            <Text className="text-white text-center font-bold">
+              {nextLabel || 'Siguiente'}
+            </Text>
           </Pressable>
         </View>
       </View>
@@ -54,8 +67,10 @@ const LayoutContent = () => {
 
 export default function LiderazgoLayout() {
   return (
-    <StepperProvider>
-      <LayoutContent />
-    </StepperProvider>
+    <LiderazgoFormProvider>
+      <StepperProvider>
+        <LayoutContent />
+      </StepperProvider>
+    </LiderazgoFormProvider>
   )
 }

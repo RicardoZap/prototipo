@@ -4,6 +4,8 @@ import CustomInput from '@/presentation/components/form/CustomInput'
 import CustomSelect from '@/presentation/components/form/CustomSelect'
 import CustomTimePicker from '@/presentation/components/form/CustomTimePicker'
 import { actividades, areas, centroTrabajo, conQuien, empleados, lugares, pertenezcoA, tareas, tipoPractica } from '@/presentation/helpers/data'
+import { useStepperContext } from '@/presentation/hooks/useStepperContext'
+import { router } from 'expo-router'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Text, View } from 'react-native'
@@ -11,6 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 
 const InformacionGeneral = () => {
   const { location } = useCurrentLocation()
+  const { setOnNext, setOnBack, setNextLabel, setBackLabel } = useStepperContext()
 
   const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: { 
@@ -46,6 +49,19 @@ const InformacionGeneral = () => {
       setValue('longitud', location.longitude.toString())
     }
   }, [location])
+
+  useEffect(() => {
+    setOnBack(() => () => {
+      router.replace('../')
+    })
+
+    setBackLabel('Regresar')
+
+    return () => {
+      setOnBack(undefined)
+      setBackLabel(undefined)
+    }
+  }, [])
 
   return (
     <ScrollView className="flex-1 p-4">
